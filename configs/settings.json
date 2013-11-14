@@ -1,0 +1,7 @@
+{
+  "mongoDb": {
+    "user": "admin",
+    "password": "ezwElyNDri-T",
+    "database": "hp"
+  }
+}
