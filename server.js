@@ -4,6 +4,34 @@ var express = require('express');
 var fs      = require('fs');
 var nconf   = require('nconf');
 
+var passport = require('passport')
+  , util = require('util')
+  , GoogleStrategy = require('passport-google').Strategy;
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
+
+passport.use(new GoogleStrategy({
+    returnURL: 'http://localhost:3005/auth/google/return',
+    realm: 'http://localhost:3005/'
+  },
+  function(identifier, profile, done) {
+    process.nextTick(function () {
+
+      console.log(identifier, profile);
+      
+      profile.identifier = identifier;
+      return done(null, profile);
+    });
+  }
+));
+
 nconf.env().file({file: 'configs/settings.json'});
 nconf.defaults({
   OPENSHIFT_NODEJS_IP: '127.0.0.1',
@@ -71,8 +99,35 @@ var SampleApp = function() {
      *  the handlers.
      */
     self.initializeServer = function() {
-      self.app = express();
-      self.app.use(express['static'](__dirname+'/static'));
+      var app = self.app = express();
+
+      app.configure(function() {
+        app.use(express.cookieParser());
+        app.use(express.urlencoded());
+        app.use(express.methodOverride());
+        app.use(express['static'](__dirname+'/static'));
+        app.use(express.session({ secret: 'random sigilterminator str22init 1' }));
+        // Initialize Passport!  Also use passport.session() middleware, to support
+        // persistent login sessions (recommended).
+        app.use(passport.initialize());
+        app.use(passport.session());
+        app.use(app.router);
+      });
+
+
+      app.get('/auth/google', passport.authenticate('google', { failureRedirect: '/login' }), function(req, res) {
+        res.redirect('/');
+      });
+      app.get('/test', function(req, res) {
+          console.log('custom middleware', req.session);
+          console.log('USER:',req.user);
+        res.redirect('/');
+      });
+
+      app.get('/auth/google/return', passport.authenticate('google', { failureRedirect: '/login' }), function(req, res) {
+        res.redirect('/');
+      });
+
     };
 
 
