@@ -1,0 +1,11 @@
+{
+    "name": "express",
+    "version": "0.0.1",
+    "main": "express.js",
+    "private": true,
+
+    "plugin": {
+        "provides": ["express"],
+        "consumes": ["passport-google"]
+    }
+}

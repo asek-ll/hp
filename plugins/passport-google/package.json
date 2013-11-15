@@ -1,0 +1,10 @@
+{
+    "name": "passport-google",
+    "version": "0.0.1",
+    "main": "passport-google.js",
+    "private": true,
+
+    "plugin": {
+        "provides": ["passport-google"]
+    }
+}
