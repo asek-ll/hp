@@ -17,9 +17,7 @@ module.exports = function setup(options, imports, register) {
   function(identifier, profile, done) {
     process.nextTick(function () {
 
-      console.log(identifier, profile);
-
-      profile.identifier = identifier;
+      //profile.identifier = identifier;
       return done(null, profile);
     });
   }));
