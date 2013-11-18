@@ -1,0 +1,17 @@
+{
+  "name": "hp-client",
+  "version": "0.0.1",
+  "description": "hp client application",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "author": "Denis Blokhin",
+  "license": "BSD",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-stylus": "~0.10.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-clean": "~0.5.0"
+  }
+}

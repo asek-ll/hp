@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+  <link rel="stylesheet" type="text/css" href="<%= grunt.config.get('staticdir') %>/<%= grunt.config.get('pkg.name') %>.css"/>
+  <script type="text/javascript" src="<%= grunt.config.get('staticdir') %>/angular.js"></script>
+  <script type="text/javascript" src="<%= grunt.config.get('staticdir') %>/bootstrap.js"></script>
+  <script type="text/javascript" src="<%= grunt.config.get('staticdir') %>/<%= grunt.config.get('pkg.name') %>.js"></script>
+</head>
+
+<body ng-controller="AppCtrl">
+  <div ng-view class="container-fluid"></div>
+</body>
+</html>
