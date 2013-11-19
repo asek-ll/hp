@@ -5,7 +5,6 @@
     "private": true,
 
     "plugin": {
-        "provides": ["express"],
-        "consumes": ["passport-google"]
+        "provides": ["express"]
     }
 }

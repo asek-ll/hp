@@ -26,4 +26,7 @@ architect.createApp(config, function (err, app) {
   ].forEach(function(element, index, array) {
     process.on(element, function() { terminator(element); });
   });
+
+  //console.log(app.ser);
+  app.services.express.run();
 });
