@@ -1,6 +1,9 @@
 module.exports = function setup(options, imports, register) {
   var express = imports.express, app = express.app;
   var sessions = require('client-sessions');
+  var _ = require('lodash');
+  
+  var COOKIE_NAME = 'hpCook';
 
   var passport = require('passport'),
   GoogleStrategy = require('passport-google').Strategy;
@@ -19,6 +22,14 @@ module.exports = function setup(options, imports, register) {
   },
   function(identifier, profile, done) {
     process.nextTick(function () {
+      profile.roles = [];
+
+      if(profile.emails && _.find(profile.emails,function (email) {
+        return email.value === 'sopplet@gmail.com';
+      })){
+
+        profile.roles.push('admin');
+      }
 
       //profile.identifier = identifier;
       return done(null, profile);
@@ -27,7 +38,7 @@ module.exports = function setup(options, imports, register) {
 
 
   express.use(sessions({
-    cookieName: 'hpCook',
+    cookieName: COOKIE_NAME,
     secret: 'random sigilterminator str22init 1',
     duration: 24 * 60 * 60 * 1000,
     activeDuration: 1000 * 60 * 5
@@ -42,9 +53,22 @@ module.exports = function setup(options, imports, register) {
   app.get('/auth/google/return', passport.authenticate('google', { failureRedirect: '/login' }), function(req, res) {
     var u = req._passport.session.user;
     if(u){
-      req.hpCook.user = u;
+      req[COOKIE_NAME].user = u;
     }
     res.redirect('/');
+  });
+
+  app.get('/logout', function (req, res) {
+    req[COOKIE_NAME].reset();
+    res.redirect('/');
+  });
+
+  app.get('/current-user', function (req, res) {
+    var json = {
+      user: req[COOKIE_NAME].user
+    };
+    res.json(200, json);
+    res.end();
   });
 
   register(null, {

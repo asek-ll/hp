@@ -27,7 +27,8 @@
     "passport": "~0.1.17",
     "passport-google": "~0.3.0",
     "architect": "~0.1.10",
-    "client-sessions": "~0.4.0"
+    "client-sessions": "~0.4.0",
+    "lodash": "~2.3.0"
   },
   "devDependencies": {},
   "bundleDependencies": [],
