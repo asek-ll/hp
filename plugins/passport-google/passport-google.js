@@ -36,7 +36,6 @@ module.exports = function setup(options, imports, register) {
     });
   }));
 
-
   express.use(sessions({
     cookieName: COOKIE_NAME,
     secret: 'random sigilterminator str22init 1',
@@ -45,6 +44,14 @@ module.exports = function setup(options, imports, register) {
   }));
 
   express.use(passport.initialize());
+
+  express.use(function sessionLogin(req, res, next) {
+    var u = req[COOKIE_NAME].user;
+    if(u){
+      return req.login(u, next);
+    }
+    return next();
+  });
 
   app.get('/auth/google', passport.authenticate('google', { failureRedirect: '/login' }), function(req, res) {
     res.redirect('/');
@@ -60,13 +67,12 @@ module.exports = function setup(options, imports, register) {
 
   app.get('/logout', function (req, res) {
     req[COOKIE_NAME].reset();
+    req.logout();
     res.redirect('/');
   });
 
   app.get('/current-user', function (req, res) {
-    var json = {
-      user: req[COOKIE_NAME].user
-    };
+    var json = { user: req.user };
     res.json(200, json);
     res.end();
   });
