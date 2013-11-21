@@ -2,8 +2,10 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-stylus');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  grunt.registerTask('default', ['clean','concat','stylus']);
+  grunt.registerTask('default', ['clean','concat','stylus:build']);
+  grunt.registerTask('release', ['clean','uglify','stylus:min','concat:index']);
 
   grunt.initConfig({
     distdir: 'dist',
@@ -43,13 +45,39 @@ module.exports = function (grunt) {
       }
     },
     stylus: {
-      compile: {
+      build: {
         options: {
+          compress: false
+        },
+        files: {
+          '<%= distdir %>/<%= pkg.name %>.css':['<%= src.stylus %>']
+        }
+      },
+      min: {
+        options: {
+          compress: true
         },
         files: {
           '<%= distdir %>/<%= pkg.name %>.css':['<%= src.stylus %>']
         }
       }
+    },
+    uglify: {
+      dist:{
+        options: {
+          banner: "<%= banner %>"
+        },
+        src:['<%= src.js %>' ,'<%= src.js %>'],
+        dest:'<%= distdir %>/<%= pkg.name %>.js'
+      },
+      angular: {
+        src:['<%= concat.angular.src %>'],
+        dest: '<%= distdir %>/angular.js'
+      },
+      bootstrap: {
+        src:['vendor/angular-ui/bootstrap/*.js'],
+        dest: '<%= distdir %>/bootstrap.js'
+      },
     }
     });
   };

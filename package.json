@@ -30,7 +30,9 @@
     "client-sessions": "~0.4.0",
     "lodash": "~2.3.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.1"
+  },
   "bundleDependencies": [],
   "private": true,
   "main": "server.js"
