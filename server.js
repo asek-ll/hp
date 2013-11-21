@@ -27,6 +27,10 @@ architect.createApp(config, function (err, app) {
     process.on(element, function() { terminator(element); });
   });
 
+
+  app.services.express.app.all('/*', function(req, res) {
+    res.sendfile('index.html', { root: './client/dist' });
+  });
   //console.log(app.ser);
   app.services.express.run();
 });
