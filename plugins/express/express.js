@@ -11,7 +11,7 @@ module.exports = function setup(options, imports, register) {
 
   middlewares.use(express.urlencoded());
   middlewares.use(express.methodOverride());
-  middlewares.use(express['static'](path.join(__dirname,'../../static')));
+  middlewares.use(express['static'](path.join(__dirname,'../../client/dist')));
 
   var run = function (next) {
     return app.listen(options.port, options.host, function() {
