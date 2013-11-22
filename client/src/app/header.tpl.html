@@ -15,7 +15,9 @@
     <ul class="nav navbar-nav">
       <li class="active"><a href="#">Home</a></li>
       <li><a href="#">Link</a></li>
-      <li><a href="/auth/google">Login</a></li>
+      <li ng-if='!userAuth.currentUser'><a href="/auth/google" onClick="window.open('/auth/google','new','width=800,height=600,scrollbars=no,menubar=no,status=no,toolbar=no')">Login</a></li>
+      <li ng-if='userAuth.currentUser'><a href='/' ng-bind="userAuth.currentUser.displayName"></a></li>
+      <li ng-if='userAuth.currentUser'><button class="btn btn-default navbar-btn" ng-click="userAuth.logout()" >Logout</button></li>
     </ul>
   </div><!-- /.navbar-collapse -->
 </nav>

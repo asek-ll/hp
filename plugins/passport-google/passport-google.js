@@ -62,7 +62,8 @@ module.exports = function setup(options, imports, register) {
     if(u){
       req[COOKIE_NAME].user = u;
     }
-    res.redirect('/');
+    //res.send(' <script type="text/javascript">window.opener.location.reload(); window.close();</script> ');
+    res.redirect('/auth/return');
   });
 
   app.get('/logout', function (req, res) {

@@ -17,6 +17,12 @@ angular.module('user', [ ]).factory('userAuth', ['$http', '$q', '$location', fun
     isAuthenticated: function(){
       return !!service.currentUser;
     },
+
+    logout: function() {
+      $http.get('/logout').then(function() {
+        service.currentUser = null;
+      });
+    },
     
     isAdmin: function() {
       return !!(service.currentUser && service.currentUser.admin);

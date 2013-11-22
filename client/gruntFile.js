@@ -11,7 +11,7 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     distdir: 'dist',
-    staticdir: '.',
+    staticdir: '',
     //staticdir: '/static',
     pkg: grunt.file.readJSON('package.json'),
     banner:
