@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default navbar-static-top" role="navigation" ng-controller="HeaderCtrl">
-  <!-- Brand and toggle get grouped for better mobile display -->
+<div class="container">
   <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-8">
       <span class="sr-only">Toggle navigation</span>
@@ -7,17 +7,20 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="#">Brand</a>
+    <a class="navbar-brand" href="/">HoPan</a>
   </div>
 
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-8">
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
+    <ul ng-if='userAuth.currentUser' class="nav navbar-nav">
+      <li><a href="/accounting">Accounting</a></li>
       <li><a href="#">Link</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
       <li ng-if='!userAuth.currentUser'><a href="/auth/google" onClick="window.open('/auth/google','new','width=800,height=600,scrollbars=no,menubar=no,status=no,toolbar=no')">Login</a></li>
       <li ng-if='userAuth.currentUser'><a href='/' ng-bind="userAuth.currentUser.displayName"></a></li>
       <li ng-if='userAuth.currentUser'><button class="btn btn-default navbar-btn" ng-click="userAuth.logout()" >Logout</button></li>
     </ul>
   </div><!-- /.navbar-collapse -->
+</div>
 </nav>

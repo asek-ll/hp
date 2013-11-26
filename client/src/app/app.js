@@ -1,8 +1,9 @@
 angular.module('app', [
-               'ngRoute',
-               'user',
-               'templates.app',
-               'templates.common'
+  'accounting',
+  'ngRoute',
+  'user',
+  'templates.app',
+  'templates.common'
 ]);
 
 angular.module('app').controller('AppCtrl',['$scope', function ($scope) {
@@ -14,7 +15,7 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function ($
   $routeProvider.otherwise({redirectTo:'/'});
 
   $routeProvider.when('/auth/return', {
-    templateUrl:'auth/return.tpl.html', 
+    template:'test', 
     controller:'returnToCtrl'
   }); 
 
@@ -30,7 +31,7 @@ angular.module('app').controller('returnToCtrl', ['$window', '$location', functi
     $window.opener.location.reload();
     $window.close();
   } else {
-    $location.path("/route");
+    $location.path("/");
   }
 }]);
 
