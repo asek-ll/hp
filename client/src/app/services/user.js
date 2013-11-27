@@ -1,4 +1,6 @@
-angular.module('user', [ ]).factory('userAuth', ['$http', '$q', '$location', function($http, $q, $location) {
+angular.module('user', [ ]);
+
+angular.module('user').factory('userAuth', ['$http', '$q', '$location', function($http, $q, $location) {
 
   var service = {
 
