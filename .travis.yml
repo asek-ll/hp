@@ -17,3 +17,4 @@
   domain: asbest001
   on:
     repo: asek-ll/hp
+  skip_cleanup: true
