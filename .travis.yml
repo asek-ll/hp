@@ -10,6 +10,7 @@
  script: grunt release
  deploy:
   provider: openshift
+  skip_cleanup: true
   user: sopplet@gmail.com
   password:
     secure: P2dupeUa4ElsjLEwj+4ZEoKqpk4HTpzxEvJ4L5BgUn+oWdjky9jMwdNJu6St4i5p6DYF5hJ9OkK+b+OAtPiFdLHYIstY2f2Cuv7h6d4pxrOALIVb4v5Engq948+/yymNfkfFYGoAgTq6aV2V0k5K+FwDlOHhStWfAuDfnDePeuU=
@@ -17,4 +18,3 @@
   domain: asbest001
   on:
     repo: asek-ll/hp
-  skip_cleanup: true
