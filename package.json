@@ -28,7 +28,11 @@
     "passport-google": "~0.3.0",
     "architect": "~0.1.10",
     "client-sessions": "~0.4.0",
-    "lodash": "~2.3.0"
+    "lodash": "~2.3.0",
+    "winston": "~0.7.2",
+    "oauth2orize": "~1.0.1",
+    "passport-oauth2-client-password": "~0.1.1",
+    "passport-http-bearer": "~1.0.1"
   },
   "devDependencies": {
     "grunt": "~0.4.1"

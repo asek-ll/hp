@@ -1,7 +1,7 @@
 var path = require('path');
 var architect = require("architect");
 
-var configPath = path.join(__dirname, "config.js");
+var configPath = path.join(__dirname, "plugins.js");
 var config = architect.loadConfig(configPath);
 
 architect.createApp(config, function (err, app) {
@@ -11,11 +11,11 @@ architect.createApp(config, function (err, app) {
 
   var terminator = function(sig){
     if (typeof sig === "string") {
-      console.log('%s: Received %s - terminating sample app ...',
+      app.services.logger.warn('%s: Received %s - terminating sample app ...',
                   Date(Date.now()), sig);
                   process.exit(1);
     }
-    console.log('%s: Node server stopped.', Date(Date.now()) );
+    app.services.logger.warn('%s: Node server stopped.', Date(Date.now()) );
   };
 
   process.on('exit', function() { terminator(); });
@@ -31,6 +31,5 @@ architect.createApp(config, function (err, app) {
   app.services.express.app.all('/*', function(req, res) {
     res.sendfile('index.html', { root: './client/dist' });
   });
-  //console.log(app.ser);
   app.services.express.run();
 });

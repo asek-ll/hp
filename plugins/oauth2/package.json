@@ -1,0 +1,11 @@
+{
+    "name": "oauth2",
+    "version": "0.0.1",
+    "main": "oauth2.js",
+    "private": true,
+
+    "plugin": {
+        "provides": ["oauth2"],
+        "consumes": ["config","express","mongodb"]
+    }
+}

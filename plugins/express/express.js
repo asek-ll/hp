@@ -4,6 +4,8 @@ module.exports = function setup(options, imports, register) {
   var middlewares = express();
 
   var path = require('path');
+  var port = imports.config.get('port') || 3000;
+  var ip = imports.config.get('ip') || "0.0.0.0";
 
   app.use(middlewares);
   app.use(app.router);
@@ -14,8 +16,8 @@ module.exports = function setup(options, imports, register) {
   middlewares.use(express['static'](path.join(__dirname,'../../client/dist')));
 
   var run = function (next) {
-    return app.listen(options.port, options.host, function() {
-      console.log('%s: Node server started on %s:%d ...', Date(Date.now() ), options.host, options.port);
+    return app.listen(port, ip, function() {
+      imports.logger.info('%s: Node server started on %s:%d ...', Date(Date.now() ), ip, port);
       if(typeof next === 'function'){
         return next();
       }

@@ -5,6 +5,7 @@
     "private": true,
 
     "plugin": {
-        "provides": ["express"]
+        "provides": ["express"],
+        "consumes": ["config","logger"]
     }
 }

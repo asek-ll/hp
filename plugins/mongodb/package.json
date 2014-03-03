@@ -1,0 +1,11 @@
+{
+    "name": "mongodb",
+    "version": "0.0.1",
+    "main": "mongodb.js",
+    "private": true,
+
+    "plugin": {
+        "provides": ["mongodb"],
+        "consumes": ["config","logger"]
+    }
+}
