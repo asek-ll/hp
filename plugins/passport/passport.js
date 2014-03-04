@@ -18,7 +18,6 @@ module.exports = function setup(options, imports, register) {
       if (client.clientSecret !== password) {
         return done(null, false);
       }
-
       return done(null, client);
     });
   }
@@ -63,6 +62,9 @@ module.exports = function setup(options, imports, register) {
     });
   }
   ));
+
+  imports.express.use(passport.initialize());
+  
 
   register(null, {
     'passport': {

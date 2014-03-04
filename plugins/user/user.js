@@ -50,8 +50,9 @@ module.exports = function setup(options, imports, register) {
 
   var UserModel = mongoose.model('User', User);
 
-  imports.express.app.get('/uinfo', function (req, res) {
-    res.send('OKEY');
+  var passport = require('passport');
+  imports.express.app.get('/uinfo', passport.authenticate('bearer', { session: false }), function (req, res) {
+    res.json({ user: req.user, auth: req.authInfo });
   });
 
   register(null, {

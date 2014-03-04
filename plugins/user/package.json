@@ -6,6 +6,6 @@
 
     "plugin": {
         "provides": ["user"],
-        "consumes": ["config","express","mongodb"]
+        "consumes": ["config","express","mongodb", "logger"]
     }
 }
