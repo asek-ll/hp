@@ -55,6 +55,8 @@ module.exports = function setup(options, imports, register) {
   });
 
   register(null, {
-    user: {},
+    user: {
+      model: UserModel,
+    },
   });
 };

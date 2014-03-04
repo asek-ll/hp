@@ -6,6 +6,6 @@
 
     "plugin": {
         "provides": ["oauth2"],
-        "consumes": ["config","express","mongodb"]
+        "consumes": ["config","express","passport","user","auth"]
     }
 }

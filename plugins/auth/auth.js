@@ -70,6 +70,10 @@ module.exports = function setup(options, imports, register) {
   var RefreshTokenModel = mongoose.model('RefreshToken', RefreshToken);
 
   return register(null, {
-    'auth': {} 
+    'auth': {
+      RefreshTokenModel: RefreshTokenModel,
+      AccessTokenModel: AccessTokenModel,
+      ClientModel: ClientModel,
+    } 
   });
 };

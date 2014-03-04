@@ -6,6 +6,7 @@ module.exports = function setup(options, imports, register) {
   var RefreshTokenModel = imports.auth.RefreshTokenModel;
   var AccessTokenModel = imports.auth.AccessTokenModel;
   var config = imports.config;
+  var app = imports.express.app;
 
 
   var server = oauth2orize.createServer();
@@ -80,13 +81,14 @@ module.exports = function setup(options, imports, register) {
       });
     });
   }));
+
+  app.post('/oauth/token', [ 
+           passport.authenticate(['basic', 'oauth2-client-password'], { session: false }),
+           server.token(),
+           server.errorHandler()
+  ]);
+
   return register(null, {
-    oath2:{
-      token: [
-        passport.authenticate(['basic', 'oauth2-client-password'], { session: false }),
-        server.token(),
-        server.errorHandler()
-      ]
-    }
+    oauth2:{}
   });
 };

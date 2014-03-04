@@ -1,0 +1,11 @@
+{
+    "name": "passport",
+    "version": "0.0.1",
+    "main": "passport.js",
+    "private": true,
+
+    "plugin": {
+        "provides": ["passport"],
+        "consumes": ["config","user", "auth", "mongodb"]
+    }
+}
