@@ -4,3 +4,4 @@ build
 deplist.txt
 settings/
 client/dist/*
+!.openshift/action_hooks/build
