@@ -34,7 +34,9 @@
     "passport-oauth2-client-password": "~0.1.1",
     "passport-http-bearer": "~1.0.1",
     "passport-http": "~0.2.2",
-    "passport-local": "~0.1.6"
+    "passport-local": "~0.1.6",
+    "nconf": "~0.6.9",
+    "mongoose": "~3.8.8"
   },
   "devDependencies": {
     "grunt": "~0.4.1"
