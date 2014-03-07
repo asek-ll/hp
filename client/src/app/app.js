@@ -19,6 +19,11 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function ($
     controller:'returnToCtrl'
   }); 
 
+  $routeProvider.when('/login', {
+    templateUrl:'login.tpl.html', 
+    controller:'LoginFormCtrl'
+  }); 
+
 }]);
 
 angular.module('app').run(['userAuth', function(userAuth) {
@@ -43,4 +48,20 @@ angular.module('app').controller('HeaderCtrl', ['$scope', '$location', '$route',
   //$scope.user = userAuth.currentUser;
   $scope.userAuth = userAuth;
 
+}]);
+
+angular.module('app').controller('LoginFormCtrl', ['$scope', '$http', function($scope, $http){
+  $scope.authorize = function () {
+    var data = {
+      username: $scope.username,
+      password: $scope.password,
+    };
+    $http({
+      url: '/login',
+      method: 'POST',
+      data: data
+    }).success(function (data, status, headers, config) {
+      console.log(arguments);
+    });
+  };
 }]);

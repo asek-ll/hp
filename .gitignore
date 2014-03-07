@@ -4,3 +4,4 @@ build
 .openshift
 deplist.txt
 settings/
+client/dist/*

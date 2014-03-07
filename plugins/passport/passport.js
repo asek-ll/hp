@@ -4,6 +4,7 @@ module.exports = function setup(options, imports, register) {
   var BasicStrategy           = require('passport-http').BasicStrategy;
   var ClientPasswordStrategy  = require('passport-oauth2-client-password').Strategy;
   var BearerStrategy          = require('passport-http-bearer').Strategy;
+  var LocalStrategy           = require('passport-local').Strategy;
 
   var UserModel               = imports.user.model;
   var ClientModel             = imports.auth.ClientModel;
@@ -62,6 +63,39 @@ module.exports = function setup(options, imports, register) {
     });
   }
   ));
+
+  passport.use(new LocalStrategy(
+    function(username, password, done) {
+    UserModel.findOne({ username: username }, function(err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.checkPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+  ));
+
+
+  imports.express.app.post('/login', passport.authenticate('local', { failureRedirect: '/login'}), function (req, res) {
+    var user = req.user;
+  });
+
+
+
+  passport.serializeUser(function(user, done) {
+    done(null, user.userId);
+  });
+
+  passport.deserializeUser(function(id, done) {
+    UserModel.findById(id, function (err, user) {
+      done(err, user);
+    });
+  });
+
 
   imports.express.use(passport.initialize());
   
