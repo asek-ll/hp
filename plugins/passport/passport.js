@@ -82,6 +82,7 @@ module.exports = function setup(options, imports, register) {
 
   imports.express.app.post('/login', passport.authenticate('local', { failureRedirect: '/login'}), function (req, res) {
     var user = req.user;
+    res.send(user);
   });
 
 
