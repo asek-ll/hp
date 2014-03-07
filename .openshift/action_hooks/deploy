@@ -1,0 +1,6 @@
+#!/bin/sh
+
+cd $OPENSHIFT_REPO_DIR/client
+npm install
+$OPENSHIFT_REPO_DIR/client/node_modules/grunt-cli/bint/grunt release
+cp $OPENSHIFT_DATA_DIR/settings $OPENSHIFT_REPO_DIR/settings -r
