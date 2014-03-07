@@ -1,7 +1,6 @@
 node_modules
 npm-debug.log
 build
-.openshift
 deplist.txt
 settings/
 client/dist/*
