@@ -1,5 +1,6 @@
 module.exports = function setup(options, imports, register) {
   var config = imports.config;
+  var _ = require('lodash');
   var passport = require('passport');
   var BasicStrategy           = require('passport-http').BasicStrategy;
   var ClientPasswordStrategy  = require('passport-oauth2-client-password').Strategy;
@@ -10,6 +11,9 @@ module.exports = function setup(options, imports, register) {
   var ClientModel             = imports.auth.ClientModel;
   var AccessTokenModel        = imports.auth.AccessTokenModel;
   var RefreshTokenModel       = imports.auth.RefreshTokenModel;
+
+  var crypto = require('crypto');
+  var url = require('url');
 
   passport.use(new BasicStrategy(
     function(username, password, done) {
@@ -82,7 +86,53 @@ module.exports = function setup(options, imports, register) {
 
   imports.express.app.post('/login', passport.authenticate('local', { failureRedirect: '/login'}), function (req, res) {
     var user = req.user;
-    res.send(user);
+    var clientId = 'webclient';
+    var redirect = function (err, params) {
+      if(err){
+        params = {error: err.toString()};
+      }
+      var pairs = _.map(params, function (value, key) {
+        return key+'='+value;
+      });
+      var urlData = {
+        pathname: '/oauth2callback',
+        hash: '/'+pairs.join('&')
+      };
+      res.redirect(url.format(urlData));
+    };
+
+    RefreshTokenModel.remove({ userId: user.userId, clientId: clientId }, function (err) {
+      if (err) {
+        return redirect(err);
+      }
+    });
+    AccessTokenModel.remove({ userId: user.userId, clientId: clientId }, function (err) {
+      if (err) {
+        return redirect(err);
+      }
+    });
+
+    var tokenValue = crypto.randomBytes(32).toString('base64');
+    var refreshTokenValue = crypto.randomBytes(32).toString('base64');
+    var token = new AccessTokenModel({ token: tokenValue, clientId: clientId, userId: user.userId });
+    var refreshToken = new RefreshTokenModel({ token: refreshTokenValue, clientId: clientId, userId: user.userId });
+    refreshToken.save(function (err) {
+      if (err) { return redirect(err); }
+    });
+    var info = { scope: '*' };
+    token.save(function (err, token) {
+      if (err) {
+        return redirect(err);
+      }
+      return redirect(null, {
+        accessToken: tokenValue, 
+        refreshToken: refreshTokenValue, 
+        'expires_in': config.get('security:tokenLife') 
+      });
+    });
+
+
+
   });
 
 
