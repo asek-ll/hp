@@ -12,8 +12,8 @@ module.exports = function setup(options, imports, register) {
   var AccessTokenModel        = imports.auth.AccessTokenModel;
   var RefreshTokenModel       = imports.auth.RefreshTokenModel;
 
-  var crypto = require('crypto');
   var url = require('url');
+  var uid = require('uid2');
 
   passport.use(new BasicStrategy(
     function(username, password, done) {
@@ -113,8 +113,8 @@ module.exports = function setup(options, imports, register) {
       }
     });
 
-    var tokenValue = crypto.randomBytes(32).toString('base64');
-    var refreshTokenValue = crypto.randomBytes(32).toString('base64');
+    var tokenValue = uid(32);
+    var refreshTokenValue = uid(32);
     var token = new AccessTokenModel({ token: tokenValue, clientId: clientId, userId: user.userId });
     var refreshToken = new RefreshTokenModel({ token: refreshTokenValue, clientId: clientId, userId: user.userId });
     refreshToken.save(function (err) {

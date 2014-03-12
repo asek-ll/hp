@@ -1,7 +1,7 @@
 module.exports = function setup(options, imports, register) {
   var oauth2orize         = require('oauth2orize');
   var passport            = require('passport');
-  var crypto              = require('crypto');
+  var uid = require('uid2');
   var UserModel = imports.user.model;
   var RefreshTokenModel = imports.auth.RefreshTokenModel;
   var AccessTokenModel = imports.auth.AccessTokenModel;
@@ -28,8 +28,8 @@ module.exports = function setup(options, imports, register) {
         }
       });
 
-      var tokenValue = crypto.randomBytes(32).toString('base64');
-      var refreshTokenValue = crypto.randomBytes(32).toString('base64');
+      var tokenValue = uid(32);
+      var refreshTokenValue = uid(32);
       var token = new AccessTokenModel({ token: tokenValue, clientId: client.clientId, userId: user.userId });
       var refreshToken = new RefreshTokenModel({ token: refreshTokenValue, clientId: client.clientId, userId: user.userId });
       refreshToken.save(function (err) {
@@ -66,8 +66,8 @@ module.exports = function setup(options, imports, register) {
           }
         });
 
-        var tokenValue = crypto.randomBytes(32).toString('base64');
-        var refreshTokenValue = crypto.randomBytes(32).toString('base64');
+        var tokenValue = uid(32);
+        var refreshTokenValue = uid(32);
         var token = new AccessTokenModel({ token: tokenValue, clientId: client.clientId, userId: user.userId });
         var refreshToken = new RefreshTokenModel({ token: refreshTokenValue, clientId: client.clientId, userId: user.userId });
         refreshToken.save(function (err) {

@@ -1,0 +1,11 @@
+{
+    "name": "accounting",
+    "version": "0.0.1",
+    "main": "accounting.js",
+    "private": true,
+
+    "plugin": {
+        "provides": ["accounting"],
+        "consumes": ["express","mongodb"]
+    }
+}

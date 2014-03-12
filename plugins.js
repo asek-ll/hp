@@ -11,6 +11,7 @@ module.exports = [
   { packagePath: "./plugins/user"},
   { packagePath: "./plugins/auth"},
   { packagePath: "./plugins/passport"},
-  { packagePath: "./plugins/oauth2"}
+  { packagePath: "./plugins/oauth2"},
+  { packagePath: "./plugins/accounting"}
   //{ packagePath: "./plugins/passport-google", }
 ];
