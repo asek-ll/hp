@@ -38,7 +38,7 @@ angular.module('angularOauth', []).
       clientId: REQUIRED_AND_MISSING,
       redirectUri: REQUIRED_AND_MISSING,
       authorizationEndpoint: REQUIRED_AND_MISSING,
-      localStorageName: 'accessToken',
+      localStorageName: 'token_info',
       verifyFunc: REQUIRED_AND_MISSING,
       scopes: []
     };
@@ -86,7 +86,7 @@ angular.module('angularOauth', []).
          * @returns {string} The access token.
          */
         get: function() {
-          return localStorage[config.localStorageName];
+          return localStorage[config.localStorageName+'_access_token'];
         },
 
         /**
@@ -94,8 +94,10 @@ angular.module('angularOauth', []).
          *
          * @param accessToken
          */
-        set: function(accessToken) {
-          localStorage[config.localStorageName] = accessToken;
+        set: function(data) {
+          localStorage[config.localStorageName+'_access_token'] = data.access_token;
+          localStorage[config.localStorageName+'_refresh_token'] = data.refresh_token;
+          localStorage[config.localStorageName+'_expires_in'] = new Date() + data.expires_in;
         },
 
         /**

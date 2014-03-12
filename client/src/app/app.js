@@ -77,7 +77,7 @@ angular.module('app').controller('HeaderCtrl', ['$rootScope','$scope', '$locatio
           $scope.accessToken = params.access_token;
           $scope.expiresIn = params.expires_in;
 
-          Token.set(params.access_token);
+          Token.set(params);
           console.log("token", params);
         });
       }, function() {
