@@ -47,7 +47,7 @@ angular.module('angularOauth', []).
       config = angular.extend(config, configExtension);
     };
 
-    this.$get = function($q, $http, $window, $rootScope) {
+    this.$get = ['$q', '$http', '$window', '$rootScope', function($q, $http, $window, $rootScope) {
       var requiredAndMissing = [];
       angular.forEach(config, function(value, key) {
         if (value === REQUIRED_AND_MISSING) {
@@ -184,14 +184,14 @@ angular.module('angularOauth', []).
           return deferred.promise;
         }
       }
-    }
+    }]
   }).
 
   /**
    * A controller for the redirect endpoint that inspects the URL redirected to by the authorization server and sends
    * it back to other windows using.
    */
-  controller('CallbackCtrl', function($scope, $location) {
+  controller('CallbackCtrl', ['$scope', '$location',function($scope, $location) {
 
     /**
      * Parses an escaped url query string into key-value pairs.
@@ -221,4 +221,4 @@ angular.module('angularOauth', []).
 
     window.opener.postMessage(params, "*");
     window.close();
-  });
+  }]);
