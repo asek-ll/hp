@@ -212,10 +212,8 @@ angular.module('angularOauth', []).
       return obj;
     }
 
-    var queryString = $location.path().substring(1);  // preceding slash omitted
+    var queryString = $location.hash().substring(1);  // preceding slash omitted
     var params = parseKeyValue(queryString);
-
-    console.log(queryString, params);
 
     // TODO: The target origin should be set to an explicit origin.  Otherwise, a malicious site that can receive
     //       the token if it manages to change the location of the parent. (See:

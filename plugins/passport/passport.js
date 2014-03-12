@@ -85,6 +85,7 @@ module.exports = function setup(options, imports, register) {
 
 
   imports.express.app.post('/login', passport.authenticate('local', { failureRedirect: '/login'}), function (req, res) {
+
     var user = req.user;
     var clientId = 'webclient';
     var redirect = function (err, params) {
@@ -125,9 +126,9 @@ module.exports = function setup(options, imports, register) {
         return redirect(err);
       }
       return redirect(null, {
-        accessToken: tokenValue, 
-        refreshToken: refreshTokenValue, 
-        'expires_in': config.get('security:tokenLife') 
+        access_token: tokenValue, 
+        refresh_token: refreshTokenValue, 
+        expires_in: config.get('security:tokenLife') 
       });
     });
 

@@ -30,12 +30,21 @@ angular.module('app').config(['$routeProvider', '$locationProvider','TokenProvid
     scopes: ["*"],
     authorizationEndpoint: '/login',
     verifyFunc: function (config, accessToken) {
-      console.log(config, accessToken);
+      var $injector = angular.injector(['ng']);
+      return $injector.invoke(['$http', '$rootScope', '$q', function($http, $rootScope, $q) {
+        var deferred = $q.defer();
+
+        $rootScope.$apply(function() {
+          deferred.resolve(accessToken);
+        });
+
+        return deferred.promise;
+      }]);
     }
   });
 
   $routeProvider.when('/oauth2callback', {
-    templateUrl:'/oauth2callback.tpl.html', 
+    templateUrl:'oauth2callback.tpl.html', 
     controller:'CallbackCtrl'
   }); 
 
@@ -69,6 +78,7 @@ angular.module('app').controller('HeaderCtrl', ['$rootScope','$scope', '$locatio
           $scope.expiresIn = params.expires_in;
 
           Token.set(params.access_token);
+          console.log("token", params);
         });
       }, function() {
         alert("Failed to verify token.");
