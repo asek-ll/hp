@@ -97,7 +97,7 @@ angular.module('angularOauth', []).
         set: function(data) {
           localStorage[config.localStorageName+'_access_token'] = data.access_token;
           localStorage[config.localStorageName+'_refresh_token'] = data.refresh_token;
-          localStorage[config.localStorageName+'_expires_in'] = new Date() + data.expires_in;
+          localStorage[config.localStorageName+'_expires_in'] = new Date (new Date().getTime() + data.expires_in * 1000);
         },
 
         /**
