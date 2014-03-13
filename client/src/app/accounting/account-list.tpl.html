@@ -1,10 +1,10 @@
 <div class='toolbar' ng-include="accounting/account-toolbar.tpl.html"></div>
-Account LIst
-<div class="list-wrapper">
+<h3>Account List</h3>
+<div class="list-wrapper list-group col-md-4">
   <div class="empty-informer" ng-show="!accounts">
     List empty
   </div>
-  <div class="account" ng-repeat="account in accounts">
+  <div class="account list-group-item" ng-repeat="account in accounts">
     <span ng-bind="account.name"> </span>
   </div>
 </div>

@@ -22,7 +22,14 @@ angular.module('app').config(['$provide','$routeProvider', '$locationProvider','
         return resource['_' + action](
           angular.extend({}, data || {}, {access_token: $delegate.get()}),
           success,
-          error
+          function(err){
+            if(err.status === 401){
+              $delegate.clear();
+            }
+            if(error){
+              error.call(null, arguments);
+            }
+          }
         );
       };
     };
@@ -93,7 +100,6 @@ angular.module('app').controller('HeaderCtrl', ['$rootScope','$scope', '$locatio
           $scope.expiresIn = params.expires_in;
 
           Token.set(params);
-          console.log("token", params);
         });
       }, function() {
         alert("Failed to verify token.");
