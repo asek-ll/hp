@@ -86,6 +86,10 @@ angular.module('angularOauth', []).
          * @returns {string} The access token.
          */
         get: function() {
+          var time = new Date(localStorage[config.localStorageName+'_expires_in']);
+          if(new Date() > time){
+            return false;
+          }
           return localStorage[config.localStorageName+'_access_token'];
         },
 

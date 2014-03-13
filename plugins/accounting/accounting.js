@@ -40,7 +40,7 @@ module.exports = function setup(options, imports, register) {
     });
   });
   app.post('/api/accounts', passport.authenticate('bearer', { session: false }), function (req, res) {
-    var account = new AccountModel(req.body.account);
+    var account = new AccountModel(req.body);
     return account.save(function (err) {
       res.send('done');
     });
@@ -51,7 +51,7 @@ module.exports = function setup(options, imports, register) {
     });
   });
   app.put('/api/accounts/:id', passport.authenticate('bearer', { session: false }), function (req, res) {
-    return AccountModel.update({_id: req.params.id}, req.body.account,  function (err, account) {
+    return AccountModel.update({_id: req.params.id}, req.body,  function (err, account) {
       res.send(account || {});
     });
   });

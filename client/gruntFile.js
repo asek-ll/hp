@@ -43,7 +43,7 @@ module.exports = function (grunt) {
         options: { process: true }
       },
       angular: {
-        src:['vendor/angular/angular.js', 'vendor/angular/angular-route.js'],
+        src:['vendor/angular/angular.js', 'vendor/angular/modules/*.js'],
         dest: '<%= distdir %>/angular.js'
       },
       bootstrap: {

@@ -10,14 +10,38 @@ angular.module('app').controller('AppCtrl',['$scope', function ($scope) {
   //body
 }]);
 
-angular.module('app').config(['$routeProvider', '$locationProvider','TokenProvider', function ($routeProvider, $locationProvider, TokenProvider) {
+angular.module('app').config(['$provide','$routeProvider', '$locationProvider','TokenProvider', function ($provide, $routeProvider, $locationProvider, TokenProvider) {
+
+  $provide.decorator('Token', ['$delegate', function ($delegate) {
+    // wraps resource action to send request with auth token
+    var tokenWrapper = function( resource, action ) {
+      // copy original action
+      resource['_' + action]  = resource[action];
+      // create new action wrapping the original and sending token
+      resource[action] = function( data, success, error){
+        return resource['_' + action](
+          angular.extend({}, data || {}, {access_token: $delegate.get()}),
+          success,
+          error
+        );
+      };
+    };
+
+    $delegate.wrapActions = function( resource, actions ) {
+      // copy original resource
+      var wrappedResource = resource;
+      angular.forEach(actions, function (action) {
+        tokenWrapper( wrappedResource, action );
+      });
+      // return modified copy of resource
+      return wrappedResource;
+    };
+
+    return $delegate;
+  }]);
+
   $locationProvider.html5Mode(true);
   $routeProvider.otherwise({redirectTo:'/'});
-
-  $routeProvider.when('/auth/return', {
-    template:'test', 
-    controller:'returnToCtrl'
-  }); 
 
   $routeProvider.when('/login', {
     templateUrl:'login.tpl.html', 
@@ -50,15 +74,6 @@ angular.module('app').config(['$routeProvider', '$locationProvider','TokenProvid
 
 }]);
 
-
-angular.module('app').controller('returnToCtrl', ['$window', '$location', function($window, $location){
-  if($window.opener){
-    $window.opener.location.reload();
-    $window.close();
-  } else {
-    $location.path("/");
-  }
-}]);
 
 angular.module('app').controller('HeaderCtrl', ['$rootScope','$scope', '$location', '$route', 'Token', function ($rootScope, $scope, $location, $route, Token) {
 
@@ -100,3 +115,5 @@ angular.module('app').controller('HeaderCtrl', ['$rootScope','$scope', '$locatio
 
 angular.module('app').controller('LoginFormCtrl', ['$scope', '$http', function($scope, $http){
  }]);
+
+
