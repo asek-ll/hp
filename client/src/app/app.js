@@ -82,7 +82,7 @@ angular.module('app').config(['$provide','$routeProvider', '$locationProvider','
 }]);
 
 
-angular.module('app').controller('HeaderCtrl', ['$rootScope','$scope', '$location', '$route', 'Token', function ($rootScope, $scope, $location, $route, Token) {
+angular.module('app').controller('HeaderCtrl', ['$rootScope','$scope', '$location', '$route', 'Token', '$window', function ($rootScope, $scope, $location, $route, Token, $window) {
 
   $scope.accessToken = Token.get();
 
@@ -102,12 +102,12 @@ angular.module('app').controller('HeaderCtrl', ['$rootScope','$scope', '$locatio
           Token.set(params);
         });
       }, function() {
-        alert("Failed to verify token.");
+        $window.alert("Failed to verify token.");
       });
 
     }, function() {
       // Failure getting token from popup.
-      alert("Failed to get token from popup.");
+      $window.alert("Failed to get token from popup.");
     });
   };
 
@@ -121,5 +121,3 @@ angular.module('app').controller('HeaderCtrl', ['$rootScope','$scope', '$locatio
 
 angular.module('app').controller('LoginFormCtrl', ['$scope', '$http', function($scope, $http){
  }]);
-
-

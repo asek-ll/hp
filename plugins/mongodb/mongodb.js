@@ -2,7 +2,11 @@ module.exports = function setup(options, imports, register) {
   var mongoose = require('mongoose');
   var log  = imports.logger;
 
-  mongoose.connect(imports.config.get('mongodb:uri'),function (err) {
+  mongoose.connect(imports.config.get('mongodb:uri'), {
+    server: {
+      auto_reconnect: true
+    }
+  }, function (err) {
     if(err){
       log.error('connection error:', err.message);
       return register(err);
