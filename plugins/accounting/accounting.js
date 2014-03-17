@@ -51,13 +51,15 @@ module.exports = function setup(options, imports, register) {
     });
   });
   app.put('/api/accounts/:id', passport.authenticate('bearer', { session: false }), function (req, res) {
+    var account = req.body;
+    delete account._id;
     return AccountModel.update({_id: req.params.id}, req.body,  function (err, account) {
       res.send(account || {});
     });
   });
   app.delete('/api/accounts/:id', passport.authenticate('bearer', { session: false }), function (req, res) {
     return AccountModel.remove({_id: req.params.id},  function (err, account) {
-      res.send({});
+      res.send(account || {});
     });
   });
 

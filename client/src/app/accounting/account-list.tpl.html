@@ -4,7 +4,8 @@
   <div class="empty-informer" ng-show="!accounts">
     List empty
   </div>
-  <div class="account list-group-item" ng-repeat="account in accounts">
-    <span ng-bind="account.name"> </span>
+  <div class="account list-group-item row" ng-repeat="account in accounts">
+    <span class="col-md-11"><a href="accounting/{{account._id}}/transfer" ng-bind="account.name"></a> </span>
+    <span class="col-md-1"><a href="accounting/{{account._id}}/edit" class="glyphicon glyphicon-pencil"></a></span>
   </div>
 </div>
