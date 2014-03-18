@@ -3,6 +3,7 @@ module.exports = function setup(options, imports, register) {
   var passport = require('passport');
   var mongoose = imports.mongodb.mongoose;
   var Schema = mongoose.Schema;
+  var _ = require('lodash');
 
   var Account = new Schema({
     name: {
@@ -35,7 +36,7 @@ module.exports = function setup(options, imports, register) {
   var AccountModel = mongoose.model('Account', Account);
 
   app.get('/api/accounts', passport.authenticate('bearer', { session: false }), function (req, res) {
-    return AccountModel.find({}, function (err, accounts) {
+    return AccountModel.find({}).sort({weight: 1}).exec(function (err, accounts) {
       res.send(accounts);
     });
   });
@@ -51,11 +52,23 @@ module.exports = function setup(options, imports, register) {
     });
   });
   app.put('/api/accounts/:id', passport.authenticate('bearer', { session: false }), function (req, res) {
-    var account = req.body;
-    delete account._id;
-    return AccountModel.update({_id: req.params.id}, req.body,  function (err, account) {
-      res.send(account || {});
+    var values = _.pick(req.body,'name','balance','type','parent','weight');
+    return AccountModel.findOne({_id: req.params.id}, function (err, account) {
+      if(err){
+        return res.send();
+      }
+      _.each(values, function (value, key) {
+        account.set(key,value);
+      });
+      return account.save(function (err) {
+        return res.send(account);
+      });
     });
+
+    //return AccountModel.update({_id: req.params.id}, req.body,  function (err, account) {
+      //console.log(account, err);
+      //res.send(account || {});
+    //});
   });
   app.delete('/api/accounts/:id', passport.authenticate('bearer', { session: false }), function (req, res) {
     return AccountModel.remove({_id: req.params.id},  function (err, account) {

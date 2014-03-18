@@ -1,11 +1,23 @@
 <div class='toolbar' ng-include="accounting/account-toolbar.tpl.html"></div>
 <h3>Account List</h3>
-<div class="list-wrapper list-group col-md-4">
-  <div class="empty-informer" ng-show="!accounts">
-    List empty
-  </div>
-  <div class="account list-group-item row" ng-repeat="account in accounts">
-    <span class="col-md-11"><a href="accounting/{{account._id}}/transfer" ng-bind="account.name"></a> </span>
-    <span class="col-md-1"><a href="accounting/{{account._id}}/edit" class="glyphicon glyphicon-pencil"></a></span>
+<div class="empty-informer" ng-show="!accounts">
+  List empty
+</div>
+<div class="list-wrapper list-group col-md-4" ui-nested-sortable="" ng-model="accounts">
+  <div class="" ng-repeat="account in accounts" ui-nested-sortable-item="">
+    <div class="account list-group-item row" ui-nested-sortable-handle>
+      <span class="col-md-11"><a href="accounting/{{account._id}}/transfer" ng-bind="account.name"></a> </span>
+      <span class="col-md-1"><a href="accounting/{{account._id}}/edit" class="glyphicon glyphicon-pencil"></a></span>
+    </div>
+
+    <div ui-nested-sortable="" ng-model="account.childs">
+      <div ng-repeat="subItem in account.childs" ui-nested-sortable-item="">
+        <div class="account list-group-item row" ui-nested-sortable-handle>
+          <span class="col-md-11"><a href="accounting/{{subItem._id}}/transfer" ng-bind="account.name"></a> </span>
+          <span class="col-md-1"><a href="accounting/{{subItem._id}}/edit" class="glyphicon glyphicon-pencil"></a></span>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

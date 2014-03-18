@@ -1,7 +1,8 @@
 angular.module('accounting', [
   'ngRoute',
   'angularOauth',
-  'ngResource'
+  'ngResource',
+  'ui.nestedSortable'
 ]);
 
 
