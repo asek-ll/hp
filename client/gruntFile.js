@@ -5,6 +5,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-html2js');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('default', ['clean','html2js','concat','stylus:build','copy:assets']);
   grunt.registerTask('release', ['clean','html2js','uglify','stylus:min','concat:index','copy:assets']);
@@ -22,6 +23,8 @@ module.exports = function (grunt) {
       src: {
       js: ['src/**/*.js'],
       stylus: ['src/stylus/stylesheet.styl'],
+      html: ['src/index.html'],
+      stylusWatch: ['src/stylus/**/*.styl'],
       jsTpl: ['<%= distdir %>/templates/**/*.js'],
       tpl: {
         app: ['src/app/**/*.tpl.html'],
@@ -108,6 +111,16 @@ module.exports = function (grunt) {
       assets: {
         files: [{ dest: '<%= distdir %>', src : '**', expand: true, cwd: 'src/assets/' }]
       }
+    },
+    watch:{
+      all: {
+        files:['<%= src.js %>', '<%= src.stylusWatch %>', '<%= src.tpl.app %>', '<%= src.tpl.common %>', '<%= src.html %>'],
+        tasks:['default']
+      },
+      build: {
+        files:['<%= src.js %>', '<%= src.stylusWatch %>', '<%= src.tpl.app %>', '<%= src.tpl.common %>', '<%= src.html %>'],
+        tasks:['build']
+      }
     }
-    });
+  });
   };
