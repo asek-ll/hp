@@ -1,0 +1,45 @@
+#!/bin/sh
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+
+SERVER_SCRIPT="/usr/bin/node"
+SERVER_SCRIPT_ARGS="/usr/bin/supervisor -w plugins,server.js,plugins.js server.js"
+SERVER_PIDFILE="/var/run/vagrantnodeserver"
+SERVER_WORKDIR="/vagrant"
+
+CLIENT_SCRIPT="/usr/bin/node"
+CLIENT_SCRIPT_ARGS="/usr/bin/grunt watch"
+CLIENT_PIDFILE="/var/run/vagrantgruntwatch"
+CLIENT_WORKDIR="/vagrant/client"
+
+
+start()
+{
+  start-stop-daemon -Sbmp ${SERVER_PIDFILE} -x ${SERVER_SCRIPT} -d ${SERVER_WORKDIR} -- ${SERVER_SCRIPT_ARGS}
+  start-stop-daemon -Sbmp ${CLIENT_PIDFILE} -x ${CLIENT_SCRIPT} -d ${CLIENT_WORKDIR} -- ${CLIENT_SCRIPT_ARGS}
+}
+
+stop()
+{
+  start-stop-daemon -Kp ${SERVER_PIDFILE} -x ${SERVER_SCRIPT}
+  start-stop-daemon -Kp ${CLIENT_PIDFILE} -x ${CLIENT_SCRIPT}
+}
+
+case "$1" in
+    start)
+        start
+    ;;
+    stop)
+        stop
+    ;;
+    reload|restart)
+      stop
+      start
+    ;;
+    *)
+        echo "Usage: {start|stop|restart}"
+        exit 1
+    ;;
+esac
+
+exit 0
+ 
