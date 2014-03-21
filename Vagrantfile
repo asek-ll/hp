@@ -11,8 +11,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "hashicorp/precise32"
-  config.vm.network "forwarded_port", guest: 8080, host: 8080
-  config.vm.provision :shell, :path => "scripts/bootstrap.sh"
+  config.vm.network "forwarded_port", guest: 8080, host: 5050
+
+  #config.vm.provision :shell, :path => "scripts/bootstrap.sh"
+
+  config.vm.provision :puppet do |puppet|
+    puppet.manifests_path = 'puppet/manifests'
+    puppet.manifest_file = 'site.pp'
+    puppet.module_path = 'puppet/modules'
+  end
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.

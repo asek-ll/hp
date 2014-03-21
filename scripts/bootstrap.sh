@@ -24,6 +24,6 @@ cp /vagrant/scripts/service /etc/init.d/project-run
 chmod 755 /etc/init.d/project-run
 echo "--- service project runned ---"
 update-rc.d project-run defaults 97 03
-service project-run
+service project-run start
 
 echo "--- All done, enjoy! :) ---"

@@ -3,12 +3,12 @@ PATH=/sbin:/usr/sbin:/bin:/usr/bin
 
 SERVER_SCRIPT="/usr/bin/node"
 SERVER_SCRIPT_ARGS="/usr/bin/supervisor -w plugins,server.js,plugins.js server.js"
-SERVER_PIDFILE="/var/run/vagrantnodeserver"
+SERVER_PIDFILE="/vagrant/scripts/pids/vagrantnodeserver"
 SERVER_WORKDIR="/vagrant"
 
 CLIENT_SCRIPT="/usr/bin/node"
 CLIENT_SCRIPT_ARGS="/usr/bin/grunt watch"
-CLIENT_PIDFILE="/var/run/vagrantgruntwatch"
+CLIENT_PIDFILE="/vagrant/scripts/pids/vagrantgruntwatch"
 CLIENT_WORKDIR="/vagrant/client"
 
 
